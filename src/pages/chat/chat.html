@@ -14,7 +14,7 @@
 <ion-content padding>
   
   
-  <div *ngIf="igualId == true">
+  <!-- <div *ngIf="igualId == true"> -->
     <ion-card item-end *ngFor="let mensagem of mensagens">
       <ion-card-content>
         <ion-item>
@@ -23,16 +23,16 @@
         </ion-item>
       </ion-card-content>
     </ion-card>
-  </div>
+  <!-- </div> -->
   
-  <div *ngIf="igualId == false">
+  <!-- <div *ngIf="igualId == false">
     <ion-list>
       <ion-item item-end *ngFor="let mensagem of mensagens">
         <ion-icon  name="ios-chatbubbles-outline"></ion-icon>
         <h2> {{ mensagem.text }} </h2>
       </ion-item>
     </ion-list>
-  </div>
+  </div> -->
   
   <ion-row margin class="row-style">
     <ion-input type="text" placeholder="Digite a sua mensagem..." [(ngModel)]="mensagemChat"></ion-input>

@@ -39,8 +39,7 @@ export class AdvogadoFeedPage {
     }
     
     criarLembrete(){
-      const modal = this.modalCtrl.create(ModalLembretePage);
-      modal.present();
+      this.navCtrl.push('ModalLembretePage');
     }
     
     getDuvidas(){

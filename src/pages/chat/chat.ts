@@ -15,7 +15,9 @@ export class ChatPage {
   mensagemChat: string = "";   
   tamanho: number;
   igualId: boolean = true;
-  teste:any [] = []; 
+  validaChat:any [] = [];
+  key: string = '';
+  arrayKey: any [] = [];
   
   constructor(
     public navCtrl: NavController, 
@@ -36,10 +38,10 @@ export class ChatPage {
       }
       
       this.getMensagem()
-      this.atualizarConversa()
     }
+    
     enviarMensagem(duvida){
-      let query = firebase.database().ref('chat-list/' + duvida.postId).push()
+      let query = firebase.database().ref('chat-list/' + this.duvida.postId).push()
       query.set({
         text: this.mensagemChat, 
         uid: firebase.auth().currentUser.uid,
@@ -49,7 +51,7 @@ export class ChatPage {
           message: "Mensagem enviada",
           duration: 3000
         }).present(); 
-        this.atualizarConversa()    
+        this.getMensagem();
         this.mensagemChat = "";
       }).catch((erro) =>{
         this.toastCtrl.create({
@@ -60,43 +62,44 @@ export class ChatPage {
     }
     
     getMensagem(){
-      firebase.database().ref('chat-list/'+this.duvida.postId).once('value', ((docs) =>{
+      firebase.database().ref('chat-list/'+ this.duvida.postId).once('value', ((docs) =>{
         docs.forEach((doc) =>{
-          this.teste.push(doc.val())
+          this.validaChat.push(doc.val())
+          console.log('CHEGOU AQUI')
         })
-        console.log(this.teste.length)
-        if(this.teste.length !== 0 ) {
-          firebase.database().ref('chat-list/'+this.duvida.postId).limitToFirst(this.teste.length).once('value', ((docs) => {
+        console.log(this.
+          validaChat.length)
+        if(this.
+          validaChat.length !== 0 ) {
+          firebase.database().ref('chat-list').child(this.duvida.postId).limitToFirst(this.validaChat.length)
+          .once('value', ((docs) => {
             docs.forEach((doc) => {
               this.mensagens.push(doc.val())
             })
+            console.log(this.mensagens)
           }))
         }
       }))
     }
-
-        
-    // atualizarConversa(){
-    //   this.mensagens = [];
-    //   firebase.database().ref('chat-list/'+this.duvida.postId).once('value', ((docs) =>{
-    //     docs.forEach((doc) =>{
-    //       console.log(doc.val())
-    //       this.mensagens.push(doc.val())
-    //     })
-    //     this.mensagens = this.mensagens;
-    //   }))
-    // }
     
     atualizarConversa(){
-      // Get a database reference to our posts
-      var db = admin.database();
-      var ref = db.ref("chat-list/"+this.duvida.postId);  
-      ref.on("child_added", function(snapshot, prevChildKey) {
-        this.mensagens = (snapshot.val())
+      let query= firebase.database().ref('chat-list').child(this.duvida.postId)
+      query.once('value', ((docs) => {
+        docs.forEach((doc) => {
+          this.mensagens.push(doc.key)
+        })
+        let valor = this.mensagens.length -1;
+        console.log(valor)
+        query.child(`${valor}`).once('value', ((docs) => {
+          docs.forEach((doc) => {
+            console.log(doc.val())
+          })
+        }))
+      }))
 
-      });
     }
-
+      
+    
   }
   
   
