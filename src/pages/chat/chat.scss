@@ -1,3 +1,13 @@
 page-chat {
 
+    .row-style{
+        border: solid map-get($colors, danger) 1px;
+        border-radius: 30px;
+        margin-top: 15px;
+
+        ion-input{
+            margin-top: 5px;
+        }
+    }
+
 }

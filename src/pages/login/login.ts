@@ -1,8 +1,12 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
-import firebase from 'firebase'
+import { CadastroPage } from '../cadastro/cadastro';
+import firebase from 'firebase';
+import { PortalPage } from '../portal/portal';
 import { HomePage } from '../home/home';
-
+import { AdvogadoFeedPage } from '../advogado-feed/advogado-feed';
+import { RecuperarSenhaPage } from '../recuperar-senha/recuperar-senha';
+import { PerfilPage } from '../perfil/perfil';
 
 @IonicPage()
 @Component({
@@ -10,7 +14,6 @@ import { HomePage } from '../home/home';
   templateUrl: 'login.html',
 })
 export class LoginPage {
-
   email: string = "admin@admin.com";
   senha: string = "123123"
   userId: string = "";
@@ -21,6 +24,10 @@ export class LoginPage {
     public navCtrl: NavController, 
     public navParams: NavParams,
     public toastCtrl: ToastController) {
+  }
+
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad LoginPage');
   }
 
   login(){
@@ -41,9 +48,9 @@ export class LoginPage {
           })
           console.log(this.id)
           if(docs.val() !== null){
-            this.navCtrl.setRoot('AdvogadoFeedPage')
+            this.navCtrl.setRoot(AdvogadoFeedPage)
           }else
-            this.navCtrl.setRoot(HomePage)
+            this.navCtrl.setRoot('PerfilPage')
       })
       ).catch(erro => {
         console.log(erro)
@@ -61,6 +68,17 @@ export class LoginPage {
       }
       toast.present();
     })
+  }
+  cadastro = () =>{
+    this.navCtrl.push(CadastroPage);
+  }
+
+  teste = () => {
+    this.navCtrl.push(HomePage);
+  }
+
+  recuperarSenha = () => {
+    this.navCtrl.push(RecuperarSenhaPage);
   }
 
 }

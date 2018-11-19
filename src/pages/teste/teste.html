@@ -15,4 +15,13 @@
 
 <ion-content padding>
 
+  <button ion-button block (click)="login()"> ABRIR LOGIN </button>
+    <ion-fab right bottom>
+      <button ion-fab color="danger"><ion-icon name="add"></ion-icon></button>
+      <ion-fab-list side="left">
+        <button ion-fab (click)="criarLembrete()"><ion-icon ios="ios-clipboard" md="md-clipboard"></ion-icon></button>
+      </ion-fab-list>
+    </ion-fab>  
+
+
 </ion-content>

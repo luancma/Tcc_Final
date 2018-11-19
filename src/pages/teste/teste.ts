@@ -1,12 +1,10 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component, ContentChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import firebase from 'firebase'
+import { LoginPage } from '../login/login';
+import { ModalLembretePage } from '../modal-lembrete/modal-lembrete';
 
-/**
- * Generated class for the TestePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+
 
 @IonicPage()
 @Component({
@@ -14,12 +12,27 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'teste.html',
 })
 export class TestePage {
+  
+  advogados:any[] = [];
+  items:any = [];
+  itemsArray = [];
+  array:any = [];
+  array2 = []
+  arrayTeste = []
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams, 
+    public modalCtrl: ModalController) {
+      
+      }
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+
+    login(){
+      this.navCtrl.push(LoginPage)
+    }
+    criarLembrete(){
+      const modal = this.modalCtrl.create(ModalLembretePage);
+      modal.present();
+    }    
   }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad TestePage');
-  }
-
-}
+  

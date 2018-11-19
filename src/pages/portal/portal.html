@@ -1,18 +1,77 @@
-<!--
-  Generated template for the PortalPage page.
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>portal</ion-title>
+  <ion-navbar color="danger">
+      <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+    <ion-title>Mensagens</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only clear (click)="sair()">
+        <ion-icon name="log-out"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
-
 </ion-header>
+
+
 
 
 <ion-content padding>
 
+
+  <ion-row margin class="row-style">
+    <button ion-button icon-only color="danger" clear (click)="addFoto()"> 
+      <ion-icon name="images"></ion-icon>
+    </button>
+    <ion-input type="text" placeholder="Digite a sua dúvida..." [(ngModel)]="text"></ion-input>
+    <button ion-button icon-only color="danger" clear (click)="post()">
+      <ion-icon name="send"></ion-icon>
+    </button>  
+  </ion-row>
+
+
+  
+  <ion-row margin class="row-style" *ngIf="image">
+    <ion-card class="round-corners">
+      <img [src]="image" class="round-corners">
+    </ion-card>
+  </ion-row>
+
+  <!-- <ion-refresher (ionRefresh)="atualizar($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher> -->
+
+  <ion-card *ngFor="let duvida of duvidas">
+    
+    <ion-item-divider color="danger">
+      
+    </ion-item-divider>
+      {{ duvida.uidUsuario }}
+    <ion-item text-wrap>
+      {{ duvida.duvidaTexto }}
+    </ion-item>
+    <!-- <img [src]="duvida.data().image" *ngIf="duvida.data().image"/> -->
+
+    <ion-row class="button-bar">
+      <ion-col >
+        <button ion-button block icon-right clear color="danger" class="border-rigth" (click)="chatComment(duvida)">
+           <small>  Abrir chat </small>
+          <ion-icon name="text"></ion-icon>
+        </button>
+      </ion-col>
+
+      <ion-col>
+          <button ion-button block icon-right clear small color="danger" class="border-rigth"> 
+            <small> Data </small>
+          </button>
+        </ion-col>
+    </ion-row>
+  </ion-card>
+
+
+  <!-- <ion-infinite-scroll (ionInfinite)="carregarDuvidas($event)">
+  <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll> -->
 </ion-content>
+
+

@@ -1,18 +1,107 @@
-<!--
-  Generated template for the CadastroPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-<ion-header>
-
+<ion-header hidden>
+  
   <ion-navbar>
-    <ion-title>cadastro</ion-title>
+    <ion-title>Login Page</ion-title>
   </ion-navbar>
-
 </ion-header>
 
-
 <ion-content padding>
+  
+  
+  <ion-grid style="width: 75%;">
+    
+    <div *ngIf="advogado == false">
+      <ion-item text-center no-lines>
+        <ion-icon name="person-add" class="logo" color="ligth"></ion-icon>
+      </ion-item>
 
+      <ion-item no-lines style="color:white">
+        <ion-label>{{ usuario }}</ion-label>
+        <ion-checkbox checked="true" (click)="hide()" ></ion-checkbox>
+      </ion-item>
+
+      <ion-row class="row-style">
+        <ion-icon name="person" color="danger"></ion-icon>
+        <ion-input type="text" placeholder="Nome completo" [(ngModel)]="novoUsuario.nome"></ion-input>
+      </ion-row>
+      
+      <ion-row class="row-style">
+        <ion-icon name="at" color="danger"></ion-icon>
+        <ion-input type="text" placeholder="Email" [(ngModel)]="novoUsuario.email"></ion-input>
+      </ion-row>
+      
+      <ion-row class="row-style">
+        <ion-icon name="lock" color="danger"></ion-icon>
+        <ion-input type="password" placeholder="Senha" [(ngModel)]="novoUsuario.senha"></ion-input>
+      </ion-row>
+      
+      <ion-row class="row-style">
+        <ion-icon name="lock" color="danger"></ion-icon>
+        <ion-input type="password" placeholder="Confirmar senha" [(ngModel)]="novoUsuario.confirmarSenha"></ion-input>
+      </ion-row>
+      
+      <ion-row class="row-style">
+        <ion-icon name="phone-portrait" color="danger"></ion-icon>
+        <ion-input type="text" placeholder="Telefone" [(ngModel)]="novoUsuario.celular"></ion-input>
+      </ion-row>
+      
+      <ion-row>
+        <button ion-button block round outline color="light" style="margin-top: 20px;" (click)="criarUsuario()">
+          Cadastrar
+        </button>
+      </ion-row>
+      
+      
+    </div>
+    
+    <div *ngIf="advogado == true">
+      <ion-item text-center no-lines>
+        <ion-icon name="briefcase" class="logo" color="ligth"></ion-icon>
+      </ion-item>
+
+      <ion-item no-lines style="color:white">
+        <ion-label>{{ usuario }}</ion-label>
+        <ion-checkbox checked="false" (click)="hide()" ></ion-checkbox>
+      </ion-item>
+
+      <ion-row class="row-style">
+        <ion-icon name="paper" color="danger"></ion-icon>
+        <ion-input type="text" placeholder="Númeor de ordem" [(ngModel)]="novoAdvogado.oab"></ion-input>
+      </ion-row>
+      
+      <ion-row class="row-style">
+        <ion-icon name="person" color="danger"></ion-icon>
+        <ion-input type="text" placeholder="Nome completo" [(ngModel)]="novoAdvogado.nome"></ion-input>
+      </ion-row>
+      
+      <ion-row class="row-style">
+        <ion-icon name="at" color="danger"></ion-icon>
+        <ion-input type="text" placeholder="Email" [(ngModel)]="novoAdvogado.email"></ion-input>
+      </ion-row>
+      
+      <ion-row class="row-style">
+        <ion-icon name="lock" color="danger"></ion-icon>
+        <ion-input type="password" placeholder="Senha" [(ngModel)]="novoAdvogado.senha"></ion-input>
+      </ion-row>
+      
+      <ion-row class="row-style">
+        <ion-icon name="lock" color="danger"></ion-icon>
+        <ion-input type="password" placeholder="Confirmar senha" [(ngModel)]="novoAdvogado.confirmarSenha"></ion-input>
+      </ion-row>
+      
+      <ion-row class="row-style">
+        <ion-icon name="phone-portrait" color="danger"></ion-icon>
+        <ion-input type="text" placeholder="Telefone" [(ngModel)]="novoAdvogado.celular"></ion-input>
+      </ion-row>
+      
+      <ion-row>
+        <button ion-button block round outline color="light" style="margin-top: 20px;" (click)="criarAdvogado()">
+          Cadastrar
+        </button>
+      </ion-row>
+    </div>
+  </ion-grid>
+  
+  
+  
 </ion-content>

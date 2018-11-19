@@ -1,18 +1,74 @@
-<!--
-  Generated template for the AdvogadoFeedPage page.
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
+  <ion-navbar color="danger">
+    <ion-title>{{ usuario }}</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only clear (click)="sair()">
+          <ion-icon ios="ios-clipboard" md="md-clipboard"></ion-icon>
+      </button>
 
-  <ion-navbar>
-    <ion-title>advogado-feed</ion-title>
+      <button ion-button icon-only clear (click)="sair()">
+          <ion-icon name="log-out"></ion-icon>
+        </button>
+    </ion-buttons>
   </ion-navbar>
-
 </ion-header>
 
 
 <ion-content padding>
 
+  <ion-row margin class="row-style" *ngIf="image">
+    <ion-card class="round-corners">
+      <img [src]="image" class="round-corners">
+    </ion-card>
+  </ion-row>
+
+  <ion-refresher (ionRefresh)="atualizar($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-item>
+    <h1 style="text-align: center">Clientes contactados </h1>
+  </ion-item>
+  <ion-card *ngFor="let duvida of duvidas">
+
+    <ion-item-divider color="danger">
+      {{ duvida.data().owner_name }}
+    </ion-item-divider>
+    
+    <ion-item text-wrap>
+      {{ duvida.data().text }}
+    </ion-item>
+
+    <img [src]="duvida.data().image" *ngIf="duvida.data().image"/>
+
+    <ion-row class="button-bar">
+      <ion-col >
+        <button ion-button block icon-right clear color="danger" class="border-rigth" (click)="chatComment(duvida)">
+           <small>{{ duvida.data().mensagensCount || 0 }} Mensagens </small>
+          <ion-icon name="text"></ion-icon>
+        </button>
+      </ion-col>
+
+      <ion-col>
+          <button ion-button block icon-right clear small color="danger" class="border-rigth"> 
+            <small> {{ getTempo(duvida.data().created.toDate()) }} </small>
+          </button>
+        </ion-col>
+    </ion-row>
+  </ion-card>
+
+  <ion-fab right bottom>
+    <button ion-fab color="danger"><ion-icon name="add"></ion-icon></button>
+    <ion-fab-list side="left">
+      <button ion-fab (click)="criarLembrete()"><ion-icon ios="ios-clipboard" md="md-clipboard"></ion-icon></button>
+    </ion-fab-list>
+  </ion-fab>
+
+
+  <ion-infinite-scroll (ionInfinite)="carregarDuvidas($event)">
+  <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>
+
+

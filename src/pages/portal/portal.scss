@@ -1,3 +1,23 @@
 page-portal {
+    .row-style{
+        border: solid map-get($colors, danger) 1px;
+        border-radius: 30px;
+        margin-top: 15px;
 
+        ion-input{
+            margin-top: 5px;
+        }
+    }
+
+    .button-bar{
+        background-color: map-get($colors , top )
+    }
+
+    .border-rigth{
+        border-right: 1px solid map-get($colors, light);
+    }
+
+    .round-corners{
+        border-radius: 24px;
+    }
 }

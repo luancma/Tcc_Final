@@ -1,18 +1,47 @@
-<!--
-  Generated template for the EditarPerfilPage page.
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>editar-perfil</ion-title>
+  <ion-navbar color="danger">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    
+    <ion-title>
+      Perfil
+    </ion-title>
+    <!-- <ion-title *ngFor="let teste of testes">
+      <p> {{ teste.data().displayName }} </p>
+    </ion-title> -->
+    <ion-buttons end>
+      <button ion-button icon-only clear (click)="sair()">
+        <ion-icon name="log-out"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
-
 </ion-header>
 
-
 <ion-content padding>
+  
+  <ion-list style="text-align: center">
+    <ion-item no-lines>
+      <h2 style="text-align:center">Bem vindo Nome de usuário</h2>
+    </ion-item>
+  </ion-list>
+  <ion-avatar item-left>
+    <img src="https://images.vexels.com/media/users/3/145908/preview2/52eabf633ca6414e60a7677b0b917d92-criador-de-avatar-masculino.jpg">
+  </ion-avatar>
+  <button ion-button full clear color="danger">Trocar foto</button>
+  
+  <ion-row class="row-style">
+    <ion-item>
+      <ion-label stacked> <ion-icon name="at" color="danger"></ion-icon>Usuário</ion-label>
+      <ion-input type="text" [(ngModel)]="nomeDeUsuario"></ion-input>
+    </ion-item>
 
+    <ion-item>
+      <ion-label stacked> <ion-icon name="at" color="danger"></ion-icon>Celular</ion-label>
+      <ion-input type="text" [(ngModel)]="telefoneUsuario"></ion-input>
+    </ion-item>
+
+    <button ion-button full clear color="danger" (click)="atualizarDados()">Editar perfil</button>
+  </ion-row>
 </ion-content>

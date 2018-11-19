@@ -1,18 +1,60 @@
-<!--
-  Generated template for the PerfilPage page.
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>perfil</ion-title>
+  <ion-navbar color="danger">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      Perfil
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only clear (click)="sair()">
+        <ion-icon name="log-out"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
-
 </ion-header>
 
-
 <ion-content padding>
+  
+  <ion-list style="text-align: center">
+    <ion-item no-lines *ngFor="let usuario of usuarios">
+      <h2 style="text-align:center">Bem vindo {{ usuario. displayName }}</h2>
+      
+    </ion-item>
+  </ion-list>
+  
+  <ion-avatar item-left>
+    <img src="https://images.vexels.com/media/users/3/145908/preview2/52eabf633ca6414e60a7677b0b917d92-criador-de-avatar-masculino.jpg">
+  </ion-avatar>
+  <button ion-button full clear color="danger" (click)="editarPerfil()">Editar perfil</button>
+  
+  <ion-item> Dúvidas mais recentes: </ion-item>  
 
+  
+  <ion-card *ngFor="let duvida of duvidas">
+    
+    <ion-item-divider color="danger">
+      {{ duvida.uidUsuario }}
+    </ion-item-divider>
+    
+    <ion-item text-wrap>
+      {{ duvida.duvidaTexto }}
+    </ion-item>
+    
+    <ion-row class="button-bar">
+      <ion-col >
+        <button ion-button block icon-right clear color="danger" class="border-rigth" (click)="chatComment(duvida)">
+           <small>  Abrir chat </small>
+          <ion-icon name="text"></ion-icon>
+        </button>
+      </ion-col>
+
+      <ion-col>
+          <button ion-button block icon-right clear small color="danger" class="border-rigth"> 
+            <small> Data </small>
+          </button>
+        </ion-col>
+    </ion-row>
+  </ion-card>
 </ion-content>
