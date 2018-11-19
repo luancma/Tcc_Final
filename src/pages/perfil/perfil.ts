@@ -5,6 +5,7 @@ import firebase from 'firebase';
 import { EditarPerfilPage } from '../editar-perfil/editar-perfil';
 import { LoginPage } from '../login/login';
 import { FCM } from '@ionic-native/fcm';
+import { AdvogadoPerfilPage } from '../advogado-perfil/advogado-perfil';
 
 @IonicPage()
 @Component({
@@ -23,6 +24,7 @@ export class PerfilPage {
   usuarios:any;
   duvidas: any [] = [];   
   userId: string;
+  id:any = []
   
   
   constructor(
@@ -31,12 +33,24 @@ export class PerfilPage {
     private loadingCtrl: LoadingController,
     private toastCtrl: ToastController,
     private fcm: FCM){
+      
       this.userId = firebase.auth().currentUser.uid
-      // this.fcm.getToken().then(token => {
-      //   firebase.database().ref('usuarios').child(this.userId).child('device_token').set(token);
-      // })
-      this.usuarioDados();
-      this.getDuvidas();
+      let refe = firebase.database().ref('advogado').child(this.userId);
+      refe.once('value', ((docs) => { 
+        docs.forEach((doc) => {
+          this.id.push(doc.val())
+        })
+        console.log(this.id)
+        if(docs.val() !== null){
+          this.navCtrl.setRoot('AdvogadoPerfilPage')
+        }else{
+          // this.fcm.getToken().then(token => {
+          //   firebase.database().ref('usuarios').child(this.userId).child('device_token').set(token);
+          // })
+          this.usuarioDados();
+          this.getDuvidas();
+        }
+      }))
     }
     
     usuarioDados = () => {

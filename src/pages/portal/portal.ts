@@ -101,7 +101,7 @@ export class PortalPage {
         }
       }).then(() => {
         for(let i = 0; i < 4 ; i++){
-          firebase.database().ref('teste-advogado-cliente/'+this.userId).push().set({
+          firebase.database().ref('teste-advogado-cliente/'+this.array2[i]).set({
             uid: this.userId,
             advogadoId: this.array2[i],
             chatId: this.teste3[this.valor]

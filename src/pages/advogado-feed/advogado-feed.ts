@@ -13,14 +13,12 @@ import { ModalLembretePage } from '../modal-lembrete/modal-lembrete';
   templateUrl: 'advogado-feed.html',
 })
 export class AdvogadoFeedPage {
-  
   text: string = "";
-  duvidas: any [] = [];       
-  pageSize: number = 5;
-  cursor: any;
+  duvidas: any [] = [];  
+  duvidas2: any [] = [];      
   infiniteEvent: any;        
-  usuario: string;
-  
+  uid: string;
+  nomeCliente: string = '';
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -29,17 +27,17 @@ export class AdvogadoFeedPage {
     private toastCtrl: ToastController,
     private viewCtrl: ViewController,
     private http: HttpClient) {
-
       
-      this.usuario = firebase.auth().currentUser.displayName;
+      
+      this.uid = firebase.auth().currentUser.uid;
       this.getDuvidas();
-
+      
     }
     
     ionViewDidLoad() {
       console.log('ionViewDidLoad AdvogadoFeedPage');
     }
-
+    
     criarLembrete(){
       const modal = this.modalCtrl.create(ModalLembretePage);
       modal.present();
@@ -47,49 +45,20 @@ export class AdvogadoFeedPage {
     
     getDuvidas(){
       this.duvidas = [];
-      let loading =  this.loadingCtrl.create({
-        content:"Carregando as suas perguntas"
-      })
-      loading.present()
-      let query = firebase.firestore().collection("duvidas").orderBy("created", "desc")
-      .limit(this.pageSize);
-      query.get()
-      .then((docs) => {
+      let query = firebase.database().ref('teste-advogado-cliente').child(this.uid);
+      query.once('value', ((docs)=> {
         docs.forEach((doc) => {
-          this.duvidas.push(doc);
+          this.duvidas.push(doc.val());
         })
-        loading.dismiss();
-        this.cursor = this.duvidas[this.duvidas.length -1];
-      }).catch((erro) => {
-        console.log(erro)
-      }) 
-    }
-    
-    carregarDuvidas(event){
-      firebase.firestore().collection("duvidas").orderBy("created", "desc").startAfter(this.cursor).limit(this.pageSize).get()
-      .then((docs) => {
-        
-        docs.forEach((doc) => {
-          this.duvidas.push(doc);
-        })
-        
-        if(docs.size < this.pageSize){
-          event.enable(false);
-          this.infiniteEvent = event;
-          
-        }else{
-          event.complete();
-          this.cursor = this.duvidas[this.duvidas.length -1];
-        }
-        
-      }).catch((erro) => {
-        console.log(erro)
-      })
-    }
-    
-    getTempo(time){
-      let tempo = moment(time).diff(moment());  
-      return moment.duration(tempo).humanize();
+        console.log(this.duvidas[1])
+        console.log(this.duvidas[2])
+        firebase.database().ref(`duvida/${this.duvidas[2]}`).once('value', ((docs) => {
+          docs.forEach((doc) => {
+            this.duvidas2.push(doc.val())
+          })
+        }))
+        console.log(this.duvidas2)
+      }))
     }
     
     sair(){
@@ -106,7 +75,7 @@ export class AdvogadoFeedPage {
     chatComment(duvida){
       this.modalCtrl.create('ChatPage', {"duvida": duvida}).present();
     }
-
+    
     fechar(){
       this.viewCtrl.dismiss();
     }

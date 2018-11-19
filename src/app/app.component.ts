@@ -2,31 +2,27 @@ import { Component, ViewChild } from '@angular/core';
 import { Platform, Nav } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { LoginPage } from '../pages/login/login';
-import { HomePage } from '../pages/home/home';
-import { PortalPage } from '../pages/portal/portal';
 import { PerfilPage } from '../pages/perfil/perfil';
-import { TestePage } from '../pages/teste/teste';
-
-
+import { PortalPage } from '../pages/portal/portal';
+import { LoginPage } from '../pages/login/login';
 
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = TestePage
+  rootPage:any = LoginPage
   @ViewChild(Nav) nav: Nav;
-
+  
   pages: Array <{title: string, component: any}>
-
+  
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
-      this.initializeApp();
-      this.pages = [
-        { title: 'Home', component: HomePage },
-        { title: 'Chat', component: PortalPage },
-        { title: 'Perfil', component: PerfilPage}
-      ];
+    this.initializeApp();
+    this.pages = [
+      { title: 'Perfil', component: PerfilPage},
+      { title: 'Dúvidas', component: PortalPage },
+      
+    ];
   }
 
   initializeApp() {

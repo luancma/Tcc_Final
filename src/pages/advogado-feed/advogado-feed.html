@@ -21,42 +21,42 @@
     <ion-card class="round-corners">
       <img [src]="image" class="round-corners">
     </ion-card>
-  </ion-row>
-
-  <ion-refresher (ionRefresh)="atualizar($event)">
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
+  </ion-row>  
 
   <ion-item>
     <h1 style="text-align: center">Clientes contactados </h1>
   </ion-item>
-  <ion-card *ngFor="let duvida of duvidas">
 
-    <ion-item-divider color="danger">
-      {{ duvida.data().owner_name }}
-    </ion-item-divider>
+
+  <ion-card *ngFor="let duvida of duvidas2">
     
-    <ion-item text-wrap>
-      {{ duvida.data().text }}
-    </ion-item>
-
-    <img [src]="duvida.data().image" *ngIf="duvida.data().image"/>
-
-    <ion-row class="button-bar">
-      <ion-col >
-        <button ion-button block icon-right clear color="danger" class="border-rigth" (click)="chatComment(duvida)">
-           <small>{{ duvida.data().mensagensCount || 0 }} Mensagens </small>
-          <ion-icon name="text"></ion-icon>
-        </button>
-      </ion-col>
-
-      <ion-col>
-          <button ion-button block icon-right clear small color="danger" class="border-rigth"> 
-            <small> {{ getTempo(duvida.data().created.toDate()) }} </small>
+      <ion-item-divider color="danger">
+        
+      </ion-item-divider>
+        {{ duvida.duvidaTexto }}
+      <ion-item text-wrap>
+        {{ duvida.duvidaTexto }}
+      </ion-item>
+      <!-- <img [src]="duvida.data().image" *ngIf="duvida.data().image"/> -->
+  
+      <ion-row class="button-bar">
+        <ion-col >
+          <button ion-button block icon-right clear color="danger" class="border-rigth" (click)="chatComment(duvida)">
+             <small>  Abrir chat </small>
+            <ion-icon name="text"></ion-icon>
           </button>
         </ion-col>
-    </ion-row>
-  </ion-card>
+  
+        <ion-col>
+            <button ion-button block icon-right clear small color="danger" class="border-rigth"> 
+              <small> Data </small>
+            </button>
+          </ion-col>
+      </ion-row>
+    </ion-card>
+  
+
+
 
   <ion-fab right bottom>
     <button ion-fab color="danger"><ion-icon name="add"></ion-icon></button>
@@ -64,11 +64,6 @@
       <button ion-fab (click)="criarLembrete()"><ion-icon ios="ios-clipboard" md="md-clipboard"></ion-icon></button>
     </ion-fab-list>
   </ion-fab>
-
-
-  <ion-infinite-scroll (ionInfinite)="carregarDuvidas($event)">
-  <ion-infinite-scroll-content></ion-infinite-scroll-content>
-  </ion-infinite-scroll>
 </ion-content>
 
 

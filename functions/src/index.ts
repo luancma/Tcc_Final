@@ -6,8 +6,8 @@ admin.initializeApp();
 exports.criarLembrete = functions.database.ref('/lembrete-advogado/{userId}/{key}')
     .onCreate((snapshot, context) => {
           
-        console.log(context.params.usuarioID);
-        return admin.database().ref('usuario/'+context.params.usuarioID+'/device_token').once('value').then((snaphot2) => {
+        console.log(context.params.userId);
+        return admin.database().ref('usuario/'+context.params.userId+'/device_token').once('value').then((snaphot2) => {
             if (snaphot2.exists()) {
                 let token = snaphot2.val();
                 const payload = {

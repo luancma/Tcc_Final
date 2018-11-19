@@ -14,7 +14,7 @@ import { PerfilPage } from '../perfil/perfil';
   templateUrl: 'login.html',
 })
 export class LoginPage {
-  email: string = "admin@admin.com";
+  email: string = "advogado@teste.com";
   senha: string = "123123"
   userId: string = "";
   idAdvogado: boolean;

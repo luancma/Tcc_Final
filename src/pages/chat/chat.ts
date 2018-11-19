@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, ToastController, ActionSheetController, AlertController, ModalController, LoadingController } from 'ionic-angular';
 import firebase, { database, firestore } from 'firebase';
-
+import * as admin from "firebase";
 
 @IonicPage()
 @Component({
@@ -22,10 +22,11 @@ export class ChatPage {
     public navParams: NavParams, 
     private viewCtrl: ViewController, 
     private toastCtrl: ToastController) {
+      
+      
       let uid = firebase.auth().currentUser.uid
       console.log(`ID DO USUARIOS : " + ${uid}`)
       this.duvida = this.navParams.get("duvida");
-      this.getMensagem()
       
       if(uid == this.duvida.uidUsuario){
         this.igualId == true;
@@ -33,6 +34,9 @@ export class ChatPage {
       }else{
         this.igualId == false;
       }
+      
+      this.getMensagem()
+      this.atualizarConversa()
     }
     enviarMensagem(duvida){
       let query = firebase.database().ref('chat-list/' + duvida.postId).push()
@@ -44,8 +48,8 @@ export class ChatPage {
         this.toastCtrl.create({
           message: "Mensagem enviada",
           duration: 3000
-        }).present();
-        this.atualizarConversa()       
+        }).present(); 
+        this.atualizarConversa()    
         this.mensagemChat = "";
       }).catch((erro) =>{
         this.toastCtrl.create({
@@ -54,7 +58,7 @@ export class ChatPage {
         }).present();
       })
     }
-
+    
     getMensagem(){
       firebase.database().ref('chat-list/'+this.duvida.postId).once('value', ((docs) =>{
         docs.forEach((doc) =>{
@@ -62,24 +66,37 @@ export class ChatPage {
         })
         console.log(this.teste.length)
         if(this.teste.length !== 0 ) {
-        firebase.database().ref('chat-list/'+this.duvida.postId).limitToFirst(this.teste.length).once('value', ((docs) => {
-          docs.forEach((doc) => {
-            this.mensagens.push(doc.val())
-          })
-        }))
-      }
+          firebase.database().ref('chat-list/'+this.duvida.postId).limitToFirst(this.teste.length).once('value', ((docs) => {
+            docs.forEach((doc) => {
+              this.mensagens.push(doc.val())
+            })
+          }))
+        }
       }))
     }
+
+        
+    // atualizarConversa(){
+    //   this.mensagens = [];
+    //   firebase.database().ref('chat-list/'+this.duvida.postId).once('value', ((docs) =>{
+    //     docs.forEach((doc) =>{
+    //       console.log(doc.val())
+    //       this.mensagens.push(doc.val())
+    //     })
+    //     this.mensagens = this.mensagens;
+    //   }))
+    // }
     
     atualizarConversa(){
-      this.mensagens = [];
-      firebase.database().ref('chat-list/'+this.duvida.postId).once('value', ((docs) =>{
-        docs.forEach((doc) =>{
-          console.log(doc.val().text)
-          this.mensagens.push(doc.val())
-        })
-      }))
+      // Get a database reference to our posts
+      var db = admin.database();
+      var ref = db.ref("chat-list/"+this.duvida.postId);  
+      ref.on("child_added", function(snapshot, prevChildKey) {
+        this.mensagens = (snapshot.val())
+
+      });
     }
+
   }
   
   

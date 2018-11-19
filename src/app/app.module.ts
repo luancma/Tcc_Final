@@ -22,6 +22,8 @@ import { PortalPage } from '../pages/portal/portal';
 import { CadastroPage } from '../pages/cadastro/cadastro';
 import { LoginPage } from '../pages/login/login';
 import { UsuarioProvider } from '../providers/usuario/usuario';
+import { AdvogadoPerfilPage } from '../pages/advogado-perfil/advogado-perfil';
+import { PerfilPage } from '../pages/perfil/perfil';
 
 var config = {
   apiKey: "AIzaSyACkuMYVbdYFa5C0MAyWsOCiiBFA2GiUcU",
@@ -43,7 +45,8 @@ firebase.initializeApp(config);
     AdvogadoFeedPage,
     RecuperarSenhaPage,
     EditarPerfilPage,
-    TestePage
+    TestePage,
+
   ],
   imports: [
     BrowserModule,
@@ -60,7 +63,8 @@ firebase.initializeApp(config);
     AdvogadoFeedPage,
     RecuperarSenhaPage,
     EditarPerfilPage,
-    TestePage
+    TestePage,
+
   ],
   providers: [
     StatusBar,
