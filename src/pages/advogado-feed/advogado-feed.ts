@@ -4,7 +4,7 @@ import firebase, { firestore } from 'firebase';
 import { HttpClient } from '@angular/common/http';
 import moment from 'moment';
 import { LoginPage } from '../login/login';
-import { ModalLembretePage } from '../modal-lembrete/modal-lembrete';
+import { LembretePage } from '../lembrete/lembrete';
 
 
 @IonicPage()
@@ -18,7 +18,10 @@ export class AdvogadoFeedPage {
   duvidas2: any [] = [];      
   infiniteEvent: any;        
   uid: string;
+  usuarioId: string;
   nomeCliente: string = '';
+  usuarios:any;
+  
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -31,32 +34,36 @@ export class AdvogadoFeedPage {
       
       this.uid = firebase.auth().currentUser.uid;
       this.getDuvidas();
-      
-    }
-    
-    ionViewDidLoad() {
-      console.log('ionViewDidLoad AdvogadoFeedPage');
     }
     
     criarLembrete(){
-      this.navCtrl.push('ModalLembretePage');
+      this.navCtrl.push(LembretePage)
     }
     
+    getUsuarioDados(){
+      this.usuarios= [];
+      console.log(this.usuarioId);
+      firebase.database().ref("usuario/" + this.usuarioId).once('value')
+      .then((docs) => {
+        this.usuarios.push(docs.val())
+      }) 
+    }
     getDuvidas(){
-      this.duvidas = [];
       let query = firebase.database().ref('teste-advogado-cliente').child(this.uid);
-      query.once('value', ((docs)=> {
+      query.on('value', ((docs)=> {
         docs.forEach((doc) => {
           this.duvidas.push(doc.val());
         })
         console.log(this.duvidas[1])
-        console.log(this.duvidas[2])
-        firebase.database().ref(`duvida/${this.duvidas[2]}`).once('value', ((docs) => {
-          docs.forEach((doc) => {
+        this.usuarioId = this.duvidas[2]
+        console.log(this.usuarioId)
+        firebase.database().ref(`duvida/${this.duvidas[2]}`).on('value', ((docs) => {
+          docs.forEach((doc) => { 
             this.duvidas2.push(doc.val())
-          })
+            this.duvidas2 = this.duvidas2.slice(0).reverse();
+          }) 
         }))
-        console.log(this.duvidas2)
+        this.getUsuarioDados()
       }))
     }
     

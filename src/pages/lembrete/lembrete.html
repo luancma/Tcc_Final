@@ -1,0 +1,20 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>lembrete</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  
+    <ion-list inset>
+        <button ion-item *ngFor="let usuario of arrayClienteDados" (click)="criarLembrete(usuario)">
+          {{ usuario.displayName }}
+        </button> 
+      </ion-list>
+
+</ion-content>

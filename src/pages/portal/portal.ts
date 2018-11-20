@@ -23,8 +23,7 @@ export class PortalPage {
   array = [];
   array2 = []
   items= []
-
-
+  
    teste3:any [] = [];
    teste4:any [] = [];
    valor: any ='';
@@ -41,8 +40,6 @@ export class PortalPage {
       this.getDuvidas();
       console.log(this.duvidas)
     }
-    
-    
     
     getDuvidas(){
       this.duvidas = [];
@@ -130,14 +127,7 @@ export class PortalPage {
       console.log(this.array2)
     }))
   }  
-  // atualizar(event){
-  //   this.getDuvidas();
-  //   event.complete();
-  //   if(this.infiniteEvent){
-  //     this.infiniteEvent.enable(true)
-  //   }
-  // }
-  
+
   sair(){
     firebase.auth().signOut().then(() =>{
       let toast = this.toastCtrl.create({

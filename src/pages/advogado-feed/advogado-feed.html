@@ -4,60 +4,58 @@
     <ion-title>{{ usuario }}</ion-title>
     <ion-buttons end>
       <button ion-button icon-only clear (click)="sair()">
-          <ion-icon ios="ios-clipboard" md="md-clipboard"></ion-icon>
+        <ion-icon ios="ios-clipboard" md="md-clipboard"></ion-icon>
       </button>
-
+      
       <button ion-button icon-only clear (click)="sair()">
-          <ion-icon name="log-out"></ion-icon>
-        </button>
+        <ion-icon name="log-out"></ion-icon>
+      </button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 
 <ion-content padding>
-
+  
   <ion-row margin class="row-style" *ngIf="image">
     <ion-card class="round-corners">
       <img [src]="image" class="round-corners">
     </ion-card>
   </ion-row>  
-
+  
   <ion-item>
     <h1 style="text-align: center">Clientes contactados </h1>
   </ion-item>
-
-
+  
+  
   <ion-card *ngFor="let duvida of duvidas2">
+    <ion-item-divider color="danger"*ngFor="let usuario of usuarios">
+      {{ usuario.displayName }}
+    </ion-item-divider>
     
-      <ion-item-divider color="danger">
-        
-      </ion-item-divider>
-        {{ duvida.duvidaTexto }}
-      <ion-item text-wrap>
-        {{ duvida.duvidaTexto }}
-      </ion-item>
-      <!-- <img [src]="duvida.data().image" *ngIf="duvida.data().image"/> -->
+    
+    <ion-item text-wrap>
+      {{ duvida.duvidaTexto }}
+    </ion-item>
+    <!-- <img [src]="duvida.data().image" *ngIf="duvida.data().image"/> -->
+    
+    <ion-row class="button-bar">
+      <ion-col >
+        <button ion-button block icon-right clear color="danger" class="border-rigth" (click)="chatComment(duvida)">
+          <small>  Abrir chat </small>
+          <ion-icon name="text"></ion-icon>
+        </button>
+      </ion-col>
+      
+      <ion-col>
+        <button ion-button block icon-right clear small color="danger" class="border-rigth"> 
+          <small> Data </small>
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-card>
   
-      <ion-row class="button-bar">
-        <ion-col >
-          <button ion-button block icon-right clear color="danger" class="border-rigth" (click)="chatComment(duvida)">
-             <small>  Abrir chat </small>
-            <ion-icon name="text"></ion-icon>
-          </button>
-        </ion-col>
   
-        <ion-col>
-            <button ion-button block icon-right clear small color="danger" class="border-rigth"> 
-              <small> Data </small>
-            </button>
-          </ion-col>
-      </ion-row>
-    </ion-card>
-  
-
-
-
   <ion-fab right bottom>
     <button ion-fab color="danger"><ion-icon name="add"></ion-icon></button>
     <ion-fab-list side="left">

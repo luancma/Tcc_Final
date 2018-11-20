@@ -7,6 +7,7 @@ import { HomePage } from '../home/home';
 import { AdvogadoFeedPage } from '../advogado-feed/advogado-feed';
 import { RecuperarSenhaPage } from '../recuperar-senha/recuperar-senha';
 import { PerfilPage } from '../perfil/perfil';
+import { AdvogadoPerfilPage } from '../advogado-perfil/advogado-perfil';
 
 @IonicPage()
 @Component({

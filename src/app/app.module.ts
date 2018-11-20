@@ -24,16 +24,18 @@ import { LoginPage } from '../pages/login/login';
 import { UsuarioProvider } from '../providers/usuario/usuario';
 import { AdvogadoPerfilPage } from '../pages/advogado-perfil/advogado-perfil';
 import { PerfilPage } from '../pages/perfil/perfil';
+import { LembretePage } from '../pages/lembrete/lembrete';
 
 var config = {
-  apiKey: "AIzaSyACkuMYVbdYFa5C0MAyWsOCiiBFA2GiUcU",
-  authDomain: "chatyoutb.firebaseapp.com",
-  databaseURL: "https://chatyoutb.firebaseio.com",
-  projectId: "chatyoutb",
-  storageBucket: "chatyoutb.appspot.com",
-  messagingSenderId: "561760823491"
+  apiKey: "AIzaSyDX-VQSVtDSjR59YbVFldIRu0jipiwIEBQ",
+  authDomain: "tcc-chat-e6ad0.firebaseapp.com",
+  databaseURL: "https://tcc-chat-e6ad0.firebaseio.com",
+  projectId: "tcc-chat-e6ad0",
+  storageBucket: "",
+  messagingSenderId: "871282849934"
 };
 firebase.initializeApp(config);
+var storage = firebase.storage();
 
 @NgModule({
   declarations: [
@@ -46,6 +48,7 @@ firebase.initializeApp(config);
     RecuperarSenhaPage,
     EditarPerfilPage,
     TestePage,
+    LembretePage
 
   ],
   imports: [
@@ -64,6 +67,7 @@ firebase.initializeApp(config);
     RecuperarSenhaPage,
     EditarPerfilPage,
     TestePage,
+    LembretePage
 
   ],
   providers: [

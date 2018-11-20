@@ -22,12 +22,11 @@ export class ChatPage {
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams, 
-    private viewCtrl: ViewController, 
+    public viewCtrl: ViewController,
     private toastCtrl: ToastController) {
-      
-      
+
       let uid = firebase.auth().currentUser.uid
-      console.log(`ID DO USUARIOS : " + ${uid}`)
+
       this.duvida = this.navParams.get("duvida");
       
       if(uid == this.duvida.uidUsuario){
@@ -38,6 +37,7 @@ export class ChatPage {
       }
       
       this.getMensagem()
+      
     }
     
     enviarMensagem(duvida){
@@ -51,7 +51,6 @@ export class ChatPage {
           message: "Mensagem enviada",
           duration: 3000
         }).present(); 
-        this.getMensagem();
         this.mensagemChat = "";
       }).catch((erro) =>{
         this.toastCtrl.create({
@@ -60,19 +59,17 @@ export class ChatPage {
         }).present();
       })
     }
-    
+
     getMensagem(){
-      firebase.database().ref('chat-list/'+ this.duvida.postId).once('value', ((docs) =>{
+      firebase.database().ref('chat-list/'+ this.duvida.postId).on('value', ((docs) =>{
         docs.forEach((doc) =>{
           this.validaChat.push(doc.val())
           console.log('CHEGOU AQUI')
         })
-        console.log(this.
-          validaChat.length)
-        if(this.
-          validaChat.length !== 0 ) {
-          firebase.database().ref('chat-list').child(this.duvida.postId).limitToFirst(this.validaChat.length)
-          .once('value', ((docs) => {
+        if(this.validaChat.length !== 0 ) {
+          this.mensagens = []
+          firebase.database(). ref('chat-list').child(this.duvida.postId).limitToFirst(this.validaChat.length)
+          .on('value', ((docs) => {
             docs.forEach((doc) => {
               this.mensagens.push(doc.val())
             })
@@ -81,25 +78,11 @@ export class ChatPage {
         }
       }))
     }
-    
-    atualizarConversa(){
-      let query= firebase.database().ref('chat-list').child(this.duvida.postId)
-      query.once('value', ((docs) => {
-        docs.forEach((doc) => {
-          this.mensagens.push(doc.key)
-        })
-        let valor = this.mensagens.length -1;
-        console.log(valor)
-        query.child(`${valor}`).once('value', ((docs) => {
-          docs.forEach((doc) => {
-            console.log(doc.val())
-          })
-        }))
-      }))
 
+    fechar(){
+      this.viewCtrl.dismiss();
     }
-      
-    
+
   }
   
   

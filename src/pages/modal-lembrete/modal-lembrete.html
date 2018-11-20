@@ -10,15 +10,34 @@
         <ion-icon name="close"></ion-icon>
       </button>
     </ion-buttons>
-    
   </ion-navbar>
-  
 </ion-header>
-
-
 <ion-content padding>
-  <ion-item>
-    <ion-textarea [(ngModel)]="textLembrete"></ion-textarea>  
-  </ion-item>
-  <button ion-button block icon-left color="danger"> <ion-icon ios="ios-heart" md="md-heart" color="danger"></ion-icon>Salvar lembrete </button>
+  
+  <form novalidate [formGroup]='registerForm'>
+    <ion-item  text-wrap>
+      <h2 style="text-align: center; text-shadow: 20px">{{ usuario.displayName }}</h2>
+    </ion-item>
+    
+    <ion-item>
+      <ion-label floating>Número do processo</ion-label>
+      <ion-input formControlName="processo" type="text" [(ngModel)]="lembrete_processo"></ion-input>
+    </ion-item>
+    
+    <ion-item>
+      <ion-label floating>Local</ion-label>
+      <ion-input formControlName="local" type="text" [(ngModel)]="lembrete_local"></ion-input>
+    </ion-item>
+    
+    <ion-item>
+      <ion-label>Date</ion-label>
+      <ion-datetime formControlName="data" displayFormat="DD/MM/YYYY" [(ngModel)]="lembrete_data"></ion-datetime>
+    </ion-item>
+    
+    <ion-item >
+      <ion-textarea formControlName="lembrete" type="text" [(ngModel)]="lembrete_body"></ion-textarea>
+    </ion-item>
+    
+    <button [disabled]="registerForm.invalid" ion-button block color="danger" (click)="criarLembrete()"> Salvar lembrete </button>
+  </form>
 </ion-content>

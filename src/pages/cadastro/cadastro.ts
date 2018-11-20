@@ -5,6 +5,7 @@ import { LoginPage } from '../login/login';
 import { UsuarioProvider } from '../../providers/usuario/usuario';
 import { HomePage } from '../home/home';
 import { AdvogadoFeedPage } from '../advogado-feed/advogado-feed';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'page-cadastro',
@@ -31,19 +32,36 @@ export class CadastroPage {
     confirmarSenha: '',
     nome: ''
   }
+
+  registerFormCliente: FormGroup
+  registerFormAdvogado: FormGroup
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
     private loadingCtrl: LoadingController,
     private usuarioService: UsuarioProvider,
     private alertCtrl: AlertController,
-    ) {
+    public formbuilder: FormBuilder) {
       console.log(this.advogado)
       console.log(this.usuario)
-    }
-    
-    ionViewDidLoad() {
-      console.log('ionViewDidLoad CadastroPage');
+
+
+      this.registerFormCliente = this.formbuilder.group({
+        nomeCompleto: [null, [Validators.required, Validators.minLength(6)]],
+        email: [null, [Validators.required, Validators.email]],
+        senha: [null, [Validators.required, Validators.minLength(6)]],
+        repetirSenha: [null, [Validators.required, Validators.minLength(6)]],
+        telefone: [null, [Validators.required, Validators.minLength(11)]],
+      })
+
+      this.registerFormAdvogado = this.formbuilder.group({
+        nomeCompleto_adv: [null, [Validators.required, Validators.minLength(6)]],
+        oab_adv: [null, [Validators.required, Validators.minLength(5)]],
+        email_adv: [null, [Validators.required, Validators.email]],
+        senha_adv: [null, [Validators.required, Validators.minLength(6)]],
+        repetirSenha_adv: [null, [Validators.required, Validators.minLength(6)]],
+        telefone_adv: [null, [Validators.required, Validators.minLength(11)]],
+      })
     }
     
     firebaseUsuario = firebase.database();

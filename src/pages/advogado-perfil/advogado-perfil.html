@@ -14,5 +14,22 @@
 
 
 <ion-content padding>
+  
+    <ion-row margin class="row-style">
+        <button ion-button icon-only color="danger" clear (click)="addFoto()"> 
+          <ion-icon name="images"></ion-icon>
+        </button>
+        
+        <ion-input type="text" placeholder="Digite a sua dúvida..." [(ngModel)]="text"></ion-input>
+        <button ion-button icon-only color="danger" clear (click)="post()">
+          <ion-icon name="send"></ion-icon>
+        </button>  
+      </ion-row>
+
+  <ion-row margin class="row-style" *ngIf="image">
+      <ion-card class="round-corners">
+        <img [src]="image" class="round-corners">
+      </ion-card>
+    </ion-row>
 
 </ion-content>

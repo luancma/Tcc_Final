@@ -45,7 +45,7 @@ export class PerfilPage {
           this.navCtrl.setRoot('AdvogadoPerfilPage')
         }else{
           // this.fcm.getToken().then(token => {
-          //   firebase.database().ref('usuarios').child(this.userId).child('device_token').set(token);
+          //   firebase.database().ref('usuario').child(this.userId).child('device_token').set(token);
           // })
           this.usuarioDados();
           this.getDuvidas();
@@ -76,6 +76,14 @@ export class PerfilPage {
           console.log(this.duvidas.length)
         })
         loading.dismiss();
+      }).then((doc) => {
+        firebase.database().ref('usuario/'+this.uid).limitToLast(5).once('value', (docs) => {
+          docs.forEach((doc) => {
+            console.log(doc.val())
+          })
+        })
+        console.log(doc.val())
+
       }).catch((error) => {
         console.log(error)
       })

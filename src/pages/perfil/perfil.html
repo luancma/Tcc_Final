@@ -34,8 +34,8 @@
   
   <ion-card *ngFor="let duvida of duvidas">
     
-    <ion-item-divider color="danger">
-      {{ duvida.uidUsuario }}
+    <ion-item-divider color="danger"*ngFor="let usuario of usuarios">
+      {{ usuario.displayName }}
     </ion-item-divider>
     
     <ion-item text-wrap>
