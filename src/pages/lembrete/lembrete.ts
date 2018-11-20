@@ -8,52 +8,52 @@ import firebase from 'firebase'
   templateUrl: 'lembrete.html',
 })
 export class LembretePage {
-
-    
+  
+  
   userId: string  = firebase.auth().currentUser.uid;
   arrayClientes: any [] = [];
   arrayClienteDados:any [] = [];
-
+  
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public modalCtrl: ModalController,
     public viewCtrl: ViewController) {
       this.getIdCliente();
-  }
-
-  criarLembrete(usuario){
-    const modal = this.modalCtrl.create('ModalLembretePage', {"usuario":usuario });
-    modal.present();
-  }
-
-  getIdCliente(){
-    this.arrayClienteDados = [];
-    console.log('aqui')
-    //
-    //Adquirindo as dados de id que estão presentes no nó 'teste-advogado-cliente
-    //
-    firebase.database().ref('teste-advogado-cliente').child(this.userId)
-    .once('value', ((docs) => {
-      docs.forEach((doc) => {
-        this.arrayClientes.push(doc.val())
-      })
-      console.log(this.arrayClientes)
-    })).then(() => {
-      console.log(this.arrayClientes[2])
-      firebase.database().ref('usuario')
-      .once('value', ((docs) => { 
+    }
+    
+    criarLembrete(usuario){
+      const modal = this.modalCtrl.create('ModalLembretePage', {"usuario":usuario });
+      modal.present();
+    }
+    
+    getIdCliente(){
+      console.log('aqui')
+      //
+      //Adquirindo as dados de id que estão presentes no nó 'teste-advogado-cliente
+      //
+      firebase.database().ref('teste-advogado-cliente').child(this.userId)
+      .once('value', ((docs) => {
         docs.forEach((doc) => {
+          this.arrayClientes.push(doc.val())
           console.log(doc.val())
-          this.arrayClienteDados.push(doc.val())
-          console.log(this.arrayClienteDados)  
-         })
-         console.log(this.arrayClienteDados)
+        })
       }))
-    })
+      if(this.arrayClientes[2] == undefined){
+        console.log( 'erro' )
+      }else{
+        console.log(this.arrayClientes[2])
+        firebase.database().ref('usuario').child(this.arrayClientes[2])
+        .once('value', ((docs) => { 
+          Object.keys(docs.val()).forEach(key => {
+            this.arrayClienteDados.push(docs.val()[key])
+            console.log(this.arrayClientes)
+        });
+        }))
+      }
+    }
+    fechar(){
+      this.viewCtrl.dismiss();
+    }
   }
-
-  fechar(){
-    this.viewCtrl.dismiss();
-  }
-}
+  

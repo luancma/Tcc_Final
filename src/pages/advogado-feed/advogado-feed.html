@@ -3,7 +3,7 @@
   <ion-navbar color="danger">
     <ion-title>{{ usuario }}</ion-title>
     <ion-buttons end>
-      <button ion-button icon-only clear (click)="sair()">
+      <button ion-button icon-only clear (click)="criarLembrete()">
         <ion-icon ios="ios-clipboard" md="md-clipboard"></ion-icon>
       </button>
       
@@ -29,6 +29,7 @@
   
   
   <ion-card *ngFor="let duvida of duvidas2">
+    
     <ion-item-divider color="danger"*ngFor="let usuario of usuarios">
       {{ usuario.displayName }}
     </ion-item-divider>

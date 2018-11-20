@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "561760823491",
-    "firebase_url": "https://chatyoutb.firebaseio.com",
-    "project_id": "chatyoutb",
-    "storage_bucket": "chatyoutb.appspot.com"
+    "project_number": "871282849934",
+    "firebase_url": "https://tcc-chat-e6ad0.firebaseio.com",
+    "project_id": "tcc-chat-e6ad0",
+    "storage_bucket": "tcc-chat-e6ad0.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:561760823491:android:3b2c413f83ba24a5",
+        "mobilesdk_app_id": "1:871282849934:android:3b2c413f83ba24a5",
         "android_client_info": {
           "package_name": "com.tambal.lawyer"
         }
       },
       "oauth_client": [
         {
-          "client_id": "561760823491-h29m8r031ig6qrbbic2smtd7lvrpbtaa.apps.googleusercontent.com",
+          "client_id": "871282849934-fba5dgagb7e0bk4tin2u7fmnh288gvng.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDOiiqbVKR8i2ObvjTqtZJ95GwhIIs6pDE"
+          "current_key": "AIzaSyAthUp8vQhnoGnbMBFUW-bu2BEXMXj8bEA"
         }
       ],
       "services": {

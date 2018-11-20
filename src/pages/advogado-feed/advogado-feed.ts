@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, ToastController, ModalController, ViewController } from 'ionic-angular';
 import firebase, { firestore } from 'firebase';
 import { HttpClient } from '@angular/common/http';
-import moment from 'moment';
 import { LoginPage } from '../login/login';
 import { LembretePage } from '../lembrete/lembrete';
 

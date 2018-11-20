@@ -32,20 +32,19 @@ export class CadastroPage {
     confirmarSenha: '',
     nome: ''
   }
-
+  
   registerFormCliente: FormGroup
   registerFormAdvogado: FormGroup
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
-    private loadingCtrl: LoadingController,
-    private usuarioService: UsuarioProvider,
+    public toastCtrl: ToastController,
     private alertCtrl: AlertController,
     public formbuilder: FormBuilder) {
       console.log(this.advogado)
       console.log(this.usuario)
-
-
+      
+      
       this.registerFormCliente = this.formbuilder.group({
         nomeCompleto: [null, [Validators.required, Validators.minLength(6)]],
         email: [null, [Validators.required, Validators.email]],
@@ -53,7 +52,7 @@ export class CadastroPage {
         repetirSenha: [null, [Validators.required, Validators.minLength(6)]],
         telefone: [null, [Validators.required, Validators.minLength(11)]],
       })
-
+      
       this.registerFormAdvogado = this.formbuilder.group({
         nomeCompleto_adv: [null, [Validators.required, Validators.minLength(6)]],
         oab_adv: [null, [Validators.required, Validators.minLength(5)]],
@@ -65,7 +64,7 @@ export class CadastroPage {
     }
     
     firebaseUsuario = firebase.database();
-
+    
     showAlert(erro) {
       const alert = this.alertCtrl.create({
         title: 'Erro!',
@@ -84,10 +83,7 @@ export class CadastroPage {
         console.log('erro')
       }
       else{
-        let loader = this.loadingCtrl.create({
-          content: 'Por favor, espere um momento'
-        });
-        loader.present();
+        let toast = this.toastCtrl.create({duration: 6000, position: 'bottom'});
         firebase.auth().createUserWithEmailAndPassword(this.novoUsuario.email, this.novoUsuario.senha)
         .then(() => {
           firebase.auth().currentUser.updateProfile({
@@ -99,30 +95,41 @@ export class CadastroPage {
               displayName: this.novoUsuario.nome,
               email: this.novoUsuario.email
             }).then(() =>{
-              loader.dismiss();
               console.log('salvo no banco')
-              this.navCtrl.push(HomePage)
+              this.navCtrl.setRoot(LoginPage)
+              toast.setMessage('Usuário criado com sucesso')
+              toast.present();  
             }).catch(() => {
-              loader.dismiss();
-              console.log('erro');
+              console.log('erro 1');
             })
-            loader.dismiss();
           }).catch(() => {
-            console.log('erro')
+            console.log('erro 2')
+            
           })
+        }).catch((error) => {
+          if(error.code == 'auth/invalid-email'){
+            toast.setMessage("Email ou senha invádlido");
+          }else if(error.code ='auth/user-disabled'){
+            toast.setMessage("Email já cadastrado!");
+          }else if(error.code == 'auth/user-not-found'){
+            toast.setMessage("Usuário não encontrado");
+          }else if(error.code =='auth/wrong-password '){
+            toast.setMessage("Usuário ou senha incorreto");
+          }
+          else if(error.code == 'auth/invalid-user-token'){
+            toast.setMessage("Email já cadastrado!")
+          }
+          toast.present();
         })
       }
     }
     
     criarAdvogado(){
+      let toastAdvogado = this.toastCtrl.create({duration: 6000, position: 'bottom'})
       if(this.novoAdvogado.senha != this.novoAdvogado.confirmarSenha){
         const erro = "As senhas não correspondem"
         this.showAlert(erro)
       }else{
-        let loader = this.loadingCtrl.create({
-          content: 'Por favor, espere um momento'
-        });
-        loader.present();
         firebase.auth().createUserWithEmailAndPassword(this.novoAdvogado.email, this.novoAdvogado.senha)
         .then(() => {
           firebase.auth().currentUser.updateProfile({
@@ -134,34 +141,49 @@ export class CadastroPage {
               displayName: this.novoAdvogado.nome,
               email: this.novoAdvogado.email
             }).then(() =>{
-              loader.dismiss();
+              
               console.log('salvo no banco')
-              this.navCtrl.push(AdvogadoFeedPage)
+              this.navCtrl.setRoot(LoginPage)
             }).catch(() => {
-              loader.dismiss();
+              
               console.log('erro');
             })
-            loader.dismiss();
+            
           }).catch(() => {
             console.log('erro')
           })
+        }).catch((error) => {
+          if(error.code == 'auth/invalid-email'){
+            toastAdvogado.setMessage("Email ou senha invádlido");
+          }else if(error.code ='auth/user-disabled'){
+            toastAdvogado.setMessage("Email já cadastrado!");
+          }else if(error.code == 'auth/user-not-found'){
+            toastAdvogado.setMessage("Usuário não encontrado");
+          }else if(error.code =='auth/wrong-password '){
+            toastAdvogado.setMessage("Usuário ou senha incorreto");
+          }
+          else if(error.code == 'auth/invalid-user-token'){
+            toastAdvogado.setMessage("Email já cadastrado!")
+          }
+          toastAdvogado.present();
         })
       }
     }
-    
-    
-    
-    hide() {
-      if(this.advogado == true){
-        this.advogado = false;
-        this.usuario = "Não sou advogado"
-        
-      }
-      else{ 
-        this.advogado = true 
-        this.usuario = "Não sou advogado"
-      }
+
+  hide() {
+    if(this.advogado == true){
+      this.advogado = false;
+      this.usuario = "Não sou advogado"
+      
     }
-    
+    else{ 
+      this.advogado = true 
+      this.usuario = "Não sou advogado"
+    }
+  }
+
+  voltar(){
+    this.navCtrl.pop();
   }
   
+}
