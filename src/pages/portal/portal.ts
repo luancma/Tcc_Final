@@ -47,16 +47,13 @@ export class PortalPage {
         content:"Carregando as suas perguntas"
       })
       loading.present()
-      firebase.database().ref('duvida/'+this.userId).once('value', (snapshot) => {
+      firebase.database().ref('duvida/'+this.userId).on('value', (snapshot) => {
         snapshot.forEach((doc) => {
           this.duvidas.push(doc.val())
           this.duvidas = this.duvidas.slice(0).reverse()
         })
         console.log(this.duvidas)
         loading.dismiss();
-        this.cursor = this.duvidas[this.duvidas.length -1];
-      }).catch((error) => {
-        console.log(error)
       })
     }
     
@@ -98,7 +95,8 @@ export class PortalPage {
         }
       }).then(() => {
         for(let i = 0; i < 4 ; i++){
-          firebase.database().ref('teste-advogado-cliente/'+this.array2[i]).set({
+          let key = firebase.database().ref('teste-advogado-cliente/'+this.array2[i]).push().key;
+          firebase.database().ref('teste-advogado-cliente/'+this.array2[i]+'/'+key).set({
             uid: this.userId,
             advogadoId: this.array2[i],
             chatId: this.teste3[this.valor]

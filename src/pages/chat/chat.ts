@@ -47,8 +47,7 @@ export class ChatPage {
         uid: firebase.auth().currentUser.uid,
         usuarioNome: firebase.auth().currentUser.displayName  
       }).then(() => {
-        this.mensagens =[];
-        this.getMensagem();
+        
         this.mensagemChat = "";
       }).catch((erro) =>{
         this.toastCtrl.create({
@@ -62,6 +61,8 @@ export class ChatPage {
 
       firebase.database(). ref('chat-list').child(this.duvida.postId)
       .on('value', ((docs) => {
+        this.mensagens =[];
+
         docs.forEach((doc) => {
           this.mensagens.push((doc.val()))
         })

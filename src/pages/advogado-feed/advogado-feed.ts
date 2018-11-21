@@ -48,15 +48,16 @@ export class AdvogadoFeedPage {
       }) 
     }
     getDuvidas(){
-      let query = firebase.database().ref('teste-advogado-cliente').child(this.uid);
+      let query = firebase.database().ref('teste-advogado-cliente').child(this.uid) ;
       query.on('value', ((docs)=> {
         docs.forEach((doc) => {
           this.duvidas.push(doc.val());
         })
         console.log(this.duvidas[1])
-        this.usuarioId = this.duvidas[2]
+        this.usuarioId = this.duvidas[1].uid
         console.log(this.usuarioId)
-        firebase.database().ref(`duvida/${this.duvidas[2]}`).on('value', ((docs) => {
+        console.log(this.duvidas)
+        firebase.database().ref('duvida/'+ this.usuarioId).on('value', ((docs) => {
           docs.forEach((doc) => { 
             this.duvidas2.push(doc.val())
             this.duvidas2 = this.duvidas2.slice(0).reverse();

@@ -28,30 +28,36 @@ export class LembretePage {
     }
     
     getIdCliente(){
+      
       console.log('aqui')
       //
-      //Adquirindo as dados de id que estão presentes no nó 'teste-advogado-cliente
+      //Adquirindo as dados de id que estão presentes no 'teste-advogado-cliente
       //
       firebase.database().ref('teste-advogado-cliente').child(this.userId)
       .once('value', ((docs) => {
-        docs.forEach((doc) => {
-          this.arrayClientes.push(doc.val())
-          console.log(doc.val())
-        })
-      }))
-      if(this.arrayClientes[2] == undefined){
-        console.log( 'erro' )
-      }else{
-        console.log(this.arrayClientes[2])
-        firebase.database().ref('usuario').child(this.arrayClientes[2])
-        .once('value', ((docs) => { 
+        console.log(docs)
+        //docs.forEach((doc) => {
+          //console.log(doc.val())
           Object.keys(docs.val()).forEach(key => {
             this.arrayClienteDados.push(docs.val()[key])
-            console.log(this.arrayClientes)
-        });
-        }))
-      }
+            console.log(this.arrayClienteDados)
+          })
+          var varial = this.arrayClienteDados[2].uid
+
+
+          firebase.database().ref('usuario/' + varial)
+          .once('value', ((docs) => {
+            docs.forEach((doc) => {
+              console.log(doc.val())
+              this.arrayClientes.push(docs.val()[0])
+              console.log(this.arrayClientes)
+            })
+          }))
+        })
+      //})
+      )
     }
+    
     fechar(){
       this.viewCtrl.dismiss();
     }
